@@ -2,7 +2,7 @@ package com.example.polls.config;
 
 import com.example.polls.security.JwtAuthenticationEntryPoint;
 import com.example.polls.security.JwtAuthenticationFilter;
-import com.example.polls.services.CustomUserDetailsService;
+import com.example.polls.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +30,7 @@ import javax.servlet.Filter;
         jsr250Enabled = true,
         prePostEnabled = true
 )
-public class SecurityConfig extends WebSecurityConfiguration {
+public class SecurityConfig extends WebSecurityConfiguration implements SecurityConfigure {
 
 
     @Autowired
@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfiguration {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
                 .and()
