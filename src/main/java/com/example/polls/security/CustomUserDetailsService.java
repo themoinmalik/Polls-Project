@@ -1,4 +1,4 @@
-package com.example.polls.services;
+package com.example.polls.security;
 
 
 import com.example.polls.model.User;
@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.nio.file.attribute.UserPrincipal;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -31,5 +30,14 @@ public class CustomUserDetailsService implements UserDetailsService {
                 );
 
         return null;//UserPrincipal.create(user);
+    }
+
+
+    public UserDetails loadUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("USer not found"));
+
+        return UserPrincipal.create(user);
     }
 }
