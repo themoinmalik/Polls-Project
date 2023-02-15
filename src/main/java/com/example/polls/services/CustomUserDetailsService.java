@@ -30,6 +30,6 @@ public class CustomUserDetailsService implements UserDetailsService {
                         new UsernameNotFoundException("User Not Found with username or email" + usernameOrEmail)
                 );
 
-        return UserPrincipal.create(user);
+        return null;//UserPrincipal.create(user);
     }
 }
