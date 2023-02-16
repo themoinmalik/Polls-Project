@@ -1,18 +1,14 @@
 package com.example.polls.payload;
 
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class SignUpRequest {
-
     @NotBlank
     @Size(min = 4, max = 40)
     private String name;
 
     @NotBlank
-    @Size(min = 4, max = 15)
+    @Size(min = 3, max = 15)
     private String username;
 
     @NotBlank
