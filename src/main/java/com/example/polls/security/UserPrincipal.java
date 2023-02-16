@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class UserPrincipal implements UserDetails {
-
     private Long id;
 
     private String name;
@@ -22,13 +21,10 @@ public class UserPrincipal implements UserDetails {
     @JsonIgnore
     private String email;
 
-
     @JsonIgnore
     private String password;
 
-
-    public Collection<? extends GrantedAuthority> authorities;
-
+    private Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(Long id, String name, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
@@ -39,13 +35,10 @@ public class UserPrincipal implements UserDetails {
         this.authorities = authorities;
     }
 
-
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities =
-                user.getRole().stream().map( role ->
-                        new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
-
-
+        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+                new SimpleGrantedAuthority(role.getName().name())
+        ).collect(Collectors.toList());
 
         return new UserPrincipal(
                 user.getId(),
@@ -56,8 +49,6 @@ public class UserPrincipal implements UserDetails {
                 authorities
         );
     }
-
-
 
     public Long getId() {
         return id;
@@ -72,8 +63,8 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+    public String getUsername() {
+        return username;
     }
 
     @Override
@@ -82,8 +73,8 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override
-    public String getUsername() {
-        return username;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
     }
 
     @Override
@@ -106,17 +97,17 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof UserPrincipal)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         UserPrincipal that = (UserPrincipal) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getName(), that.getName()) && Objects.equals(getUsername(), that.getUsername()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getAuthorities(), that.getAuthorities());
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getUsername(), getEmail(), getPassword(), getAuthorities());
+
+        return Objects.hash(id);
     }
 }
