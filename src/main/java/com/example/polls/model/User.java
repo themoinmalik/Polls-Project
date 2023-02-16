@@ -1,6 +1,7 @@
 package com.example.polls.model;
 
 
+import com.example.polls.model.audit.DateAudit;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -11,10 +12,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user", uniqueConstraints = {
-
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {
+                "username"
+        }),
+        @UniqueConstraint(columnNames = {
+                "email"
+        })
 })
-public class User {
+public class User  extends DateAudit {
 
 
     @Id
@@ -51,8 +57,7 @@ public class User {
 
     }
 
-    public User(Long id, String name, String email, String password, String username) {
-        this.id = id;
+    public User(String name, String email, String password, String username) {
         this.name = name;
         this.email = email;
         this.username = username;
