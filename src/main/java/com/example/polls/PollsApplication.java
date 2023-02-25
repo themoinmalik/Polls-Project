@@ -12,6 +12,7 @@ import java.util.TimeZone;
 @EntityScan(basePackageClasses = {PollsApplication.class, Jsr310JpaConverters.class})
 public class PollsApplication {
 
+
     void init(){
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
     }
